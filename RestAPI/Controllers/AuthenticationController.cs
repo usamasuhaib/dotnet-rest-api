@@ -29,15 +29,14 @@ namespace RestAPI.Controllers
             _jwtConfig = optionsMonitor.CurrentValue;
         }
 
-        [HttpGet("Users")]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> getUsersList()
-        {
-            var users = await _userManager.Users.ToListAsync();
-            return Ok(users);
+        //[HttpGet("Users")]
+        //public async Task<IActionResult> getUsersList()
+        //{
+        //    var users = await _userManager.Users.ToListAsync();
+        //    return Ok(users);
 
 
-        }
+        //}
 
 
         [HttpPost("Register")]
@@ -181,6 +180,8 @@ namespace RestAPI.Controllers
 
         [HttpGet("Profile")]
         [Authorize]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
         public async Task< IActionResult> getProfileData()
         {
 

@@ -25,7 +25,6 @@ namespace RestAPI.Controllers
 
 
         [HttpGet]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult GetStudents()
         {
             var students = _studentService.GetStudents();
