@@ -6,12 +6,8 @@ namespace RestAPI.Models
     public class Image
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
-
-
-        [Required]
-        public string Title { get; set; }
 
         public string ImagePath { get; set; }
 

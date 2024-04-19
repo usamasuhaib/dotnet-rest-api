@@ -7,8 +7,10 @@ namespace RestAPI.Services.FileService
     public interface IFileService
     {
 
+        public Task<string> UploadFile(IFormFile file);
 
-        Task<IActionResult> UploadImage(Image image);
+        public IEnumerable<Image> getImages();
+
 
     }
 }

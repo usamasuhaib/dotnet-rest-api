@@ -17,15 +17,31 @@ namespace RestAPI.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> UploadImage([FromBody] Image img)
+        [HttpGet("Get")]
+        public IActionResult Get()
         {
-            if (ModelState.IsValid)
-            {
-                await _fileService.UploadImage(img);
-            }
+            var images = _fileService.getImages();
 
-            return BadRequest("Invalid image data.");
+            return Ok(images);
+
+        }
+
+        [HttpPost("Upload")]
+        public async Task<IActionResult> UploadImage( IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+            try
+            {
+                string imagePath = await _fileService.UploadFile(file);
+                return Ok(new { ImagePath = imagePath });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error uploading file: {ex.Message}");
+            }
         }
     }
 }
