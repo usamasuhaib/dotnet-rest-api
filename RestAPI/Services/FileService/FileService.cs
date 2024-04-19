@@ -21,8 +21,12 @@ namespace RestAPI.Services.FileService
         {
             return _dbContext.Images.ToList();
         }
-       
-    
+
+     
+
+     
+
+
         public async Task<string> UploadFile(IFormFile file)
         {
 
@@ -49,7 +53,10 @@ namespace RestAPI.Services.FileService
 
             string fileName=Guid.NewGuid().ToString()+ extension;
             //string path = Path.Combine(Directory.GetCurrentDirectory(),"Uploads/images");
-            string path = Path.Combine(_webHost.ContentRootPath, "Uploads/Images");
+            string path = Path.Combine(_webHost.WebRootPath, "Uploads/Images");
+
+
+            //return hostingEnv.WebRootPath + "\\Uploads\\Product\\" + FileName;
 
 
             if (!Directory.Exists(path))
@@ -93,7 +100,7 @@ namespace RestAPI.Services.FileService
 
                 //string path = Path.Combine(_webHost.ContentRootPath, "Uploads/Images");
 
-                string deleteFromFolder = Path.Combine(_webHost.ContentRootPath, "Uploads/Images");
+                string deleteFromFolder = Path.Combine(_webHost.WebRootPath, "Uploads/Images");
                 string currentImage = Path.Combine(Directory.GetCurrentDirectory(), deleteFromFolder, img.ImagePath);
                 if (currentImage != null)
                 {

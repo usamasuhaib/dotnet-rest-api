@@ -48,9 +48,19 @@ namespace RestAPI.Controllers
         [HttpDelete("Delete")]
         public async Task<IActionResult> DeleteImage(int id)
         {
+            try
+            {
 
-            await _fileService.DeleteImage(id);
-            return Ok("image deleted successfully");
+                await _fileService.DeleteImage(id);
+                return Ok("image deleted successfully");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+           
 
         }
     }

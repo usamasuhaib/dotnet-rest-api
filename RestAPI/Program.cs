@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using RestAPI.Configuration;
 using RestAPI.Data;
@@ -7,6 +8,7 @@ using RestAPI.Models;
 using RestAPI.Services.EmailService;
 using RestAPI.Services.FileService;
 using RestAPI.Services.StudentService;
+using ServiceStack.Text;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -85,5 +87,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Images")),
+    RequestPath = new PathString("/Uploads/Images")
+});
+
+
 
 app.Run();
