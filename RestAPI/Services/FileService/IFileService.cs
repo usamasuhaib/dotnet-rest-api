@@ -11,6 +11,8 @@ namespace RestAPI.Services.FileService
 
         public IEnumerable<Image> getImages();
 
+        public Task DeleteImage(int id);
+
 
     }
 }

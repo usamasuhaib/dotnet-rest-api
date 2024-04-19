@@ -74,10 +74,38 @@ namespace RestAPI.Services.FileService
             await _dbContext.SaveChangesAsync();
 
 
-
-
             return fileName;
 
+        }
+
+
+        public async Task DeleteImage(int id)
+        {
+            var img = _dbContext.Images.FirstOrDefault(x => x.Id == id);
+
+            //var img = _dbContext.Images.Find(id);
+            if (img == null)
+            {
+                throw new InvalidOperationException($"Image with ID {id} not found.");
+            }
+            else
+            {
+
+                //string path = Path.Combine(_webHost.ContentRootPath, "Uploads/Images");
+
+                string deleteFromFolder = Path.Combine(_webHost.ContentRootPath, "Uploads/Images");
+                string currentImage = Path.Combine(Directory.GetCurrentDirectory(), deleteFromFolder, img.ImagePath);
+                if (currentImage != null)
+                {
+                    if (System.IO.File.Exists(currentImage))
+                    {
+                        System.IO.File.Delete(currentImage);
+                    };
+                };
+
+                _dbContext.Images.Remove(img);
+                await _dbContext.SaveChangesAsync();
+            }
         }
     }
 }

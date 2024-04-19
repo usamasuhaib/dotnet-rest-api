@@ -43,5 +43,15 @@ namespace RestAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error uploading file: {ex.Message}");
             }
         }
+
+
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+
+            await _fileService.DeleteImage(id);
+            return Ok("image deleted successfully");
+
+        }
     }
 }
