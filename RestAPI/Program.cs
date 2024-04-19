@@ -5,6 +5,7 @@ using RestAPI.Configuration;
 using RestAPI.Data;
 using RestAPI.Models;
 using RestAPI.Services.EmailService;
+using RestAPI.Services.FileService;
 using RestAPI.Services.StudentService;
 using System.Text;
 
@@ -68,6 +69,7 @@ builder.Services.AddSwaggerGen();
 //my services
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddTransient<IFileService, FileService>();
 
 var app = builder.Build(); 
 
