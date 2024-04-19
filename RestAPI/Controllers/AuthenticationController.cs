@@ -29,16 +29,6 @@ namespace RestAPI.Controllers
             _jwtConfig = optionsMonitor.CurrentValue;
         }
 
-        //[HttpGet("Users")]
-        //public async Task<IActionResult> getUsersList()
-        //{
-        //    var users = await _userManager.Users.ToListAsync();
-        //    return Ok(users);
-
-
-        //}
-
-
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequestDto model)
         {
@@ -178,39 +168,7 @@ namespace RestAPI.Controllers
 
 
 
-        [HttpGet("Profile")]
-        [Authorize]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-
-        public async Task< IActionResult> getProfileData()
-        {
-
-            // Get the user's ID
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // Get the user's email
-            var userEmail = User.FindFirstValue(ClaimTypes.Email);
-
-
-            // Use the userId to fetch the user's profile data from the database
-            var user = await _userManager.FindByEmailAsync(userEmail);
-
-            if (user == null)
-            {
-                return NotFound(new { ErrorMessage = "User not found" });
-            }
-
-            // Return user profile data
-            var profileData = new
-            {
-                UserId = user.Id,
-                Email = user.Email,
-                UserName = user.UserName,
-                // Add other user profile properties as needed
-            };
-
-            return Ok(profileData);
-        }
+       
 
 
 
