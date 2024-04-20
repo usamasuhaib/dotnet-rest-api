@@ -7,6 +7,7 @@ using RestAPI.Data;
 using RestAPI.Models;
 using RestAPI.Services.EmailService;
 using RestAPI.Services.FileService;
+using RestAPI.Services.ProfileImageService;
 using RestAPI.Services.StudentService;
 using ServiceStack.Text;
 using System.Text;
@@ -72,6 +73,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddTransient<IFileService, FileService>();
+builder.Services.AddScoped<IProfileImageService, ProfileImageService>();
+
 
 var app = builder.Build(); 
 
@@ -91,8 +94,8 @@ app.MapControllers();
 app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions()
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Images")),
-    RequestPath = new PathString("/Uploads/Images")
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
+    RequestPath = new PathString("/Uploads")
 });
 
 

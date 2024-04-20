@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestAPI.Models;
+using RestAPI.Services.ProfileImageService;
 using System.Security.Claims;
 
 namespace RestAPI.Controllers
@@ -13,10 +14,12 @@ namespace RestAPI.Controllers
     public class ProfileController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly IProfileImageService _profileImageService;
 
-        public ProfileController(UserManager<AppUser> userManager)
+        public ProfileController(UserManager<AppUser> userManager, IProfileImageService profileImageService)
         {
             _userManager = userManager;
+            _profileImageService = profileImageService;
         }
 
         [HttpGet("Users")]
@@ -25,6 +28,23 @@ namespace RestAPI.Controllers
             var users = await _userManager.Users.ToListAsync();
             return Ok(users);
         }
+
+
+        [HttpPatch("upload")]
+        public async Task<IActionResult> UploadProfileImage(IFormFile file, string? id)
+        {
+            try
+            {
+                await _profileImageService.UploadProfile(file, id);
+                return Ok("Profile image uploaded successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error uploading profile image: {ex.Message}");
+            }
+        }
+
+
 
 
 
@@ -53,6 +73,7 @@ namespace RestAPI.Controllers
                 UserId = user.Id,
                 Email = user.Email,
                 UserName = user.UserName,
+                ImagePath=user.ImagePath
             };
 
             return Ok(profileData);

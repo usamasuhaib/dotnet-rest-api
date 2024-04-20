@@ -52,11 +52,8 @@ namespace RestAPI.Services.FileService
             //namechanging
 
             string fileName=Guid.NewGuid().ToString()+ extension;
-            //string path = Path.Combine(Directory.GetCurrentDirectory(),"Uploads/images");
-            string path = Path.Combine(_webHost.WebRootPath, "Uploads/Images");
+            string path = Path.Combine(_webHost.ContentRootPath, "Uploads/Images");
 
-
-            //return hostingEnv.WebRootPath + "\\Uploads\\Product\\" + FileName;
 
 
             if (!Directory.Exists(path))
@@ -100,7 +97,7 @@ namespace RestAPI.Services.FileService
 
                 //string path = Path.Combine(_webHost.ContentRootPath, "Uploads/Images");
 
-                string deleteFromFolder = Path.Combine(_webHost.WebRootPath, "Uploads/Images");
+                string deleteFromFolder = Path.Combine(_webHost.ContentRootPath, "Uploads/Images");
                 string currentImage = Path.Combine(Directory.GetCurrentDirectory(), deleteFromFolder, img.ImagePath);
                 if (currentImage != null)
                 {
